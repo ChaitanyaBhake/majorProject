@@ -9,7 +9,7 @@ function locomotiveAnimations() {
     tablet: { smooth: true },
 
     // for mobile
-    smartphone: { smooth: true },
+    smartphone: { smooth: false },
   });
   locoScroll.on("scroll", ScrollTrigger.update);
 
