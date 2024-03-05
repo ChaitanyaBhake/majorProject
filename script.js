@@ -118,31 +118,8 @@ function playPauseVideo() {
   const cursor = document.querySelector("#video-cursor");
   let flag = 0;
 
-  videoContainer.addEventListener("mouseenter", mouseEnterHandler);
-  videoContainer.addEventListener("mouseleave", mouseLeaveHandler);
-  videoContainer.addEventListener("click", clickHandler);
-  videoContainer.addEventListener("touchstart", touchHandler);
-
-  function mouseEnterHandler() {
-    videoContainer.addEventListener("mousemove", mouseMoveHandler);
-  }
-
-  function mouseLeaveHandler() {
-    videoContainer.removeEventListener("mousemove", mouseMoveHandler);
-  }
-
-  function mouseMoveHandler(dets) {
-    gsap.to(".mousefollower", {
-      opacity: 0,
-    });
-    gsap.to("#video-cursor", {
-      left: dets.x - 590,
-      y: dets.y - 300,
-    });
-  }
-
-  function clickHandler(e) {
-    e.preventDefault();
+  // Function to toggle play/pause
+  function togglePlayPause() {
     if (flag === 0) {
       video.play();
       video.style.opacity = 1;
@@ -162,22 +139,38 @@ function playPauseVideo() {
     }
   }
 
-  function touchHandler(e) {
-    e.preventDefault();
-    const touch = e.touches[0];
-    const rect = video.getBoundingClientRect();
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
-    const clickEvent = new MouseEvent("click", {
-      bubbles: true,
-      cancelable: true,
-      viewportOffset: {
-        x: x,
-        y: y,
-      },
+  // Mouse events
+  videoContainer.addEventListener("mouseenter", () => {
+    videoContainer.addEventListener("mousemove", (dets) => {
+      gsap.to(".mousefollower", {
+        opacity: 0,
+      });
+      gsap.to("#video-cursor", {
+        left: dets.x - 590,
+        y: dets.y - 300,
+      });
     });
-    video.dispatchEvent(clickEvent);
-  }
+  });
+
+  videoContainer.addEventListener("mouseleave", () => {
+    gsap.to(".mousefollower", {
+      opacity: 1,
+    });
+    gsap.to("#video-cursor", {
+      left: "70%",
+      top: "-15%",
+    });
+  });
+
+  // Click event (for both mouse and touch)
+  videoContainer.addEventListener("click", togglePlayPause);
+
+  // Touch events
+  videoContainer.addEventListener("touchstart", function(event) {
+    event.preventDefault(); // Prevent default touch behavior
+    
+    togglePlayPause(); // Toggle play/pause on touch
+  });
 }
 
 function sheryAnimation() {
@@ -495,8 +488,8 @@ function fixedScrollerBugOnMobile() {
 
 
 loadingAnimation();
-fixedScrollerBugOnMobile();
 playPauseVideo();
+fixedScrollerBugOnMobile();
 cursorAnimation();
 locomotiveAnimations();
 sheryAnimation();
