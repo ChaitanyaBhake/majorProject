@@ -40,9 +40,9 @@ body {
   width: 100%;
 }
 
-body {
+/* body {
   overflow-x: hidden;
-}
+} */
 
 .mousefollower {
   border: 2px solid #fff;
@@ -193,14 +193,14 @@ body {
 main {
   position: relative;
   background-color: var(--primary);
-  z-index: 99;
+  /* z-index: 99; */
 }
 
 #page1 {
   height: 100vh;
   width: 100%;
   position: relative;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 #hamburger{
@@ -353,7 +353,7 @@ main {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  z-index: 999;
+  /* z-index: 999; */
 }
 
 #video-cursor i {
@@ -923,7 +923,7 @@ footer > h5 {
 
 #hero3 {
   /* background-color: red; */
-  z-index: 999;
+  /* z-index: 999; */
   position: relative;
 }
 
@@ -940,7 +940,7 @@ footer > h5 {
 }
 
 ._canvas_container {
-  z-index: 99999 !important;
+  z-index: 9 !important;
   pointer-events: none;
 }
 
@@ -955,7 +955,7 @@ footer > h5 {
     height: 60vh;
     width: 100%;
     position: relative;
-    z-index: 100;
+    /* z-index: 100; */
     padding-top: 1px;
   }
 
@@ -1107,7 +1107,7 @@ footer > h5 {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    z-index: 999;
+    /* z-index: 999; */
     -webkit-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);

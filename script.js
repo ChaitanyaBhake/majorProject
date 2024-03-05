@@ -118,29 +118,31 @@ function playPauseVideo() {
   const cursor = document.querySelector("#video-cursor");
   let flag = 0;
 
-  videoContainer.addEventListener("mouseenter", () => {
-    videoContainer.addEventListener("mousemove", (dets) => {
-      gsap.to(".mousefollower", {
-        opacity: 0,
-      });
-      gsap.to("#video-cursor", {
-        left: dets.x - 590,
-        y: dets.y - 300,
-      });
-    });
-  });
+  videoContainer.addEventListener("mouseenter", mouseEnterHandler);
+  videoContainer.addEventListener("mouseleave", mouseLeaveHandler);
+  videoContainer.addEventListener("click", clickHandler);
+  videoContainer.addEventListener("touchstart", touchHandler);
 
-  videoContainer.addEventListener("mouseleave", () => {
+  function mouseEnterHandler() {
+    videoContainer.addEventListener("mousemove", mouseMoveHandler);
+  }
+
+  function mouseLeaveHandler() {
+    videoContainer.removeEventListener("mousemove", mouseMoveHandler);
+  }
+
+  function mouseMoveHandler(dets) {
     gsap.to(".mousefollower", {
-      opacity: 1,
+      opacity: 0,
     });
     gsap.to("#video-cursor", {
-      left: "70%",
-      top: "-15%",
+      left: dets.x - 590,
+      y: dets.y - 300,
     });
-  });
+  }
 
-  videoContainer.addEventListener("click", () => {
+  function clickHandler(e) {
+    e.preventDefault();
     if (flag === 0) {
       video.play();
       video.style.opacity = 1;
@@ -158,7 +160,24 @@ function playPauseVideo() {
       });
       flag = 0;
     }
-  });
+  }
+
+  function touchHandler(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = video.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    const clickEvent = new MouseEvent("click", {
+      bubbles: true,
+      cancelable: true,
+      viewportOffset: {
+        x: x,
+        y: y,
+      },
+    });
+    video.dispatchEvent(clickEvent);
+  }
 }
 
 function sheryAnimation() {
@@ -447,11 +466,38 @@ function footerAnimation() {
     });
 }
 
+function fixedScrollerBugOnMobile() {
+  const open = document.querySelector("#open-modal");
+  const closeModalBtn = document.querySelector("#close");
+  const modal = document.querySelector(".modal-container");
+
+  // Check if the screen size is less than 650px
+  const mediaQuery = window.matchMedia("(max-width: 649px)");
+
+  // Open modal
+  const openModal = () => {
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
+  };
+
+  // Close modal
+  const closeModal = () => {
+    modal.style.display = "none";
+    document.body.style.overflow = "visible";
+  };
+
+  // Add event listeners if the screen size is less than 650px
+  if (mediaQuery.matches) {
+    open.addEventListener("click", openModal);
+    closeModalBtn.addEventListener("click", closeModal);
+  }
+}
 
 
 loadingAnimation();
-cursorAnimation();
+fixedScrollerBugOnMobile();
 playPauseVideo();
+cursorAnimation();
 locomotiveAnimations();
 sheryAnimation();
 flagAnimation();
