@@ -452,7 +452,7 @@ function footerAnimation() {
 loadingAnimation();
 cursorAnimation();
 playPauseVideo();
-locomotiveAnimations();
+// locomotiveAnimations();
 sheryAnimation();
 flagAnimation();
 footerAnimation();
