@@ -923,7 +923,7 @@ footer > h5 {
 
 #hero3 {
   /* background-color: red; */
-  /* z-index: 999; */
+  z-index: 999;
   position: relative;
 }
 
@@ -940,7 +940,7 @@ footer > h5 {
 }
 
 ._canvas_container {
-  z-index: 9 !important;
+  z-index: 9999 !important;
   pointer-events: none;
 }
 
